@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Užduočių sąrašas</title>
+    <style>
+        /* Pagrindinis puslapio stilius */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        /* Formos stiliai */
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Užduočių sąrašas</h1>
+        <form action="/filtruoti" method="POST">
+            <label for="statusas">Statusas:</label>
+            <select id="statusas" name="statusas">
+                <option value="Visi">Visi</option>
+                <option value="Atlikta">Atlikta</option>
+                <option value="Neatlikta">Neatlikta</option>
+                <option value="Nukelta">Nukelta</option>
+            </select>
+            <label for="vartotojas">Vartotojas:</label>
+            <select id="vartotojas" name="vartotojas">
+                <option value="Visi">Visi</option>
+                <option value="Vartotojas1">Vartotojas1</option>
+                <option value="Vartotojas2">Vartotojas2</option>
+                <option value="Vartotojas3">Vartotojas3</option>
+            </select>
+            <button type="submit">Filtruoti</button>
+        </form>
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <strong>{{ task[1] }}</strong><br>
+                {{ task[2] }}<br>
+                Statusas: {{ task[3] }}<br>
+                Vartotojas: {{ task[4] }}<br>
+                <a href="/redaguoti/{{ task[0] }}">Redaguoti</a> | <form action="/istrinti/{{ task[0] }}" method="POST"><button type="submit">Ištrinti</button></form>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Pridėti naują užduotį:</h2>
+        <form action="/prideti" method="POST">
+            <label for="pavadinimas">Pavadinimas:</label><br>
+            <input type="text" id="pavadinimas" name="pavadinimas"><br>
+            <label for="apibudinimas">Apibūdinimas:</label><br>
+            <textarea id="apibudinimas" name="apibudinimas"></textarea><br>
+            <label for="statusas">Statusas:</label><br>
+            <select id="statusas" name="statusas">
+                <option value="Atlikta">Atlikta</option>
+                <option value="Neatlikta">Neatlikta</option>
+                <option value="Nukelta">Nukelta</option>
+            </select><br>
+            <label for="vartotojas">Vartotojas:</label><br>
+            <input type="text" id="vartotojas" name="vartotojas"><br>
+            <input type="submit" value="Pridėti">
+        </form>
+    </div>
+</body>
+</html>
